@@ -1,0 +1,17 @@
+/* Parent container styles */
+.parent-container {
+    display: flex; /* Display children in a row */
+    flex-wrap: wrap; /* Allow wrapping to the next line if needed */
+    justify-content: flex-start; /* Align children to the start of the row */
+    align-items: stretch; /* Stretch children to match the container's height */
+}
+
+/* Style for each child div */
+.col-lg-4 {
+    flex-basis: calc(33.3333% - 30px); /* Width of each child with some spacing */
+    margin: 15px; /* Add spacing between children */
+}
+.img-fluid
+{
+    width: 60%;
+}

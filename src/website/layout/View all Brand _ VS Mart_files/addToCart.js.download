@@ -1,0 +1,173 @@
+// ADD TO CART
+const addToCart = async (data,product_id) =>
+{
+  data.children[0].style.display = "none"
+  data.children[1].style.display = "none"
+  data.children[2].style.display = "block"
+    try {
+        const respo = await axios.post("/async/add-to-cart",{
+           product_id
+        });
+        if(respo.status == 200)
+   {
+        // SHOWING TOAST
+        document.getElementById("cart_total_products").textContent = respo.data.cart.length
+        document.getElementById("cart_item_count_").textContent = respo.data.cart.length
+        document.getElementById("carts_total").textContent = respo.data.total_amount
+        data.children[0].style.display = "block"
+        data.children[1].style.display = "block"
+        data.children[2].style.display = "none"
+        Toastify({
+            text: respo.data.msg,
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+            onClick: function(){} // Callback after click
+          }).showToast();
+
+        //   UPADING CART LIST
+        const list = document.getElementById("cart__list")
+        list.innerHTML = ``
+        respo.data.cart.forEach(product => {
+        list.innerHTML += 
+        `
+        <li class="cart-item">
+                        <div class="cart-media">
+                            <a href="#">
+                             <img src="http://localhost:8000/uploads/product_image/${product.product_image == null ? 'default.png' : product.product_image}" style=" width:80px; height: 80px; " alt="product">
+                                                            </a>
+                            <button type="button" class="cart-delete" onclick="removeFromCart(this,${product.cart_id})"> <i class="far text-white fa-trash-alt"></i></button>
+                        </div>
+                        <div class="cart-info-group">
+                            <div class="cart-info">
+                                <h6><a href="#">${product.english_name}</a></h6>
+                                <p>Unit Price ${product.cart_amount}</p>
+                                <p class="text-primary">PV : ${product.point_value}</p>
+                            </div>
+                            <div class="cart-action-group">
+                                <div class="product-action">
+                                    <input class="action-input" type="number" name="product_qty" style="height: 30px; width:80px; " min="0" value="${product.cart_product_qty}">
+                                    <input type="hidden" name="product_id" value="${product.cart_id}">
+                                    <button type="submit" class="action-plus" title="Quantity Plus" onclick="updateCart(this,${product.product_id})"><i class="icofont-plus"></i></button>
+                                </div>
+                                <h6>${product.cart_amount}</h6>
+                            </div>
+                        </div>
+                    </li>
+        `
+      });
+        }
+        else {
+            // SHOW ERROR TOAST
+            Toastify({
+                text: "Something went wrong...!!",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                style: {
+                  background: "linear-gradient(to right top, #370519, #610428, #8e0133, #bd0139, #eb123a);",
+                },
+                onClick: function(){} // Callback after click
+              }).showToast();  Toastify({
+                text: "Something went wrong...!!",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                style: {
+                  background: "linear-gradient(to right top, #370519, #610428, #8e0133, #bd0139, #eb123a);",
+                },
+                onClick: function(){} // Callback after click
+              }).showToast();
+        }
+    } catch (error) {
+    }
+}
+
+// UPDATE CART
+const updateCart = async (data,product_id) => {
+ let qty = data.parentNode.children[0].value
+  try {
+    const resp = await axios.post('/async/update-cart',{product_id, qty})
+      // SHOWING TOAST
+      document.getElementById("cart_total_products").textContent = resp.data.cart.length
+      document.getElementById("cart_item_count_").textContent = resp.data.cart.length
+      document.getElementById("carts_total").textContent = resp.data.total_amount
+      Toastify({
+          text: resp.data.msg,
+          duration: 3000,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+          onClick: function(){} // Callback after click
+        }).showToast();
+
+      //   UPADING CART LIST
+      const list = document.getElementById("cart__list")
+      list.innerHTML = ``
+      resp.data.cart.forEach(product => {
+      list.innerHTML += 
+      `
+      <li class="cart-item">
+                      <div class="cart-media">
+                          <a href="#">
+                           <img src="http://localhost:8000/uploads/product_image/${product.product_image == null ? 'default.png' : product.product_image}" style=" width:80px; height: 80px; " alt="product">
+                                                          </a>
+                          <button type="button" class="cart-delete" onclick="removeFromCart(this,${product.cart_id})"> <i class="far text-white fa-trash-alt"></i></button>
+                      </div>
+                      <div class="cart-info-group">
+                          <div class="cart-info">
+                              <h6><a href="#">${product.english_name}</a></h6>
+                              <p>Unit Price ${product.cart_amount}</p>
+                              <p class="text-primary">PV : ${product.point_value}</p>
+                          </div>
+                          <div class="cart-action-group">
+                              <div class="product-action">
+                                  <input class="action-input" type="number" name="product_qty" style="height: 30px; width:80px; " min="0" value="${product.cart_product_qty}">
+                                  <input type="hidden" name="product_id" value="${product.cart_id}">
+                                  <button type="submit" class="action-plus" title="Quantity Plus" onclick="updateCart(this,${product.product_id})"><i class="icofont-plus"></i></button>
+                              </div>
+                              <h6>${product.cart_amount}</h6>
+                          </div>
+                      </div>
+                  </li>
+      `
+    });
+  } catch (error) {
+  }
+}
+
+// REMOVE FROM CART
+const removeFromCart = async (data,id) =>
+{
+  try {
+    const axiosResponse = await axios.get(`/async/remove-from-cart/${id}`)
+    if(axiosResponse.status == 200)
+    {
+    data.parentNode.parentNode.remove()
+    document.getElementById("cart_total_products").textContent = document.getElementById("cart__list").children.length
+    document.getElementById("cart_item_count_").textContent = document.getElementById("cart__list").children.length
+    document.getElementById("carts_total").textContent = axiosResponse.data.total_amount
+    Toastify({
+      text: "Product removed from cart...!!",
+      duration: 3000,
+      close: true,
+      gravity: "top",
+      position: "right",
+      style: {
+        background: "#e63c30",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+    }
+  } catch (errr) {
+  }
+}

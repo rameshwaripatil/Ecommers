@@ -1,0 +1,85 @@
+
+  .inner-section {
+    margin-bottom: 100px;
+}
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left:550px;
+  margin-bottom: 1rem;
+  list-style: none;
+}
+.fas{
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    color: black;
+}
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  color: black;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+  .h2{
+    text-align: center;
+    padding-top: 200px;
+    
+  }
+  .h4{
+    text-align: center;
+  
+  }
+
+  .i{
+    color:black ;
+    padding-left: 400px;
+  }
+  .about-content{
+    margin-top:50px;
+  }
+  .user-form-card
+  {
+    margin: 200px;
+  }
+  .user-form-remind
+  {
+margin-left: 100px;
+text-align: center;
+    
+  }
+  .user-form-card {
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+  }
+  .user-form-logo {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  .user-form-remind {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    background: var(--white);
+    border: 1px solid var(--border);
+}
+.user-form-footer {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
+img {
+  vertical-align: middle;
+}
+.navbar{
+  height: 130px;
+}
